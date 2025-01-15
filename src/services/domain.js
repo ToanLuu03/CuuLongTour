@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const domain = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://cuulongtourbe.onrender.com",
 });
 
 domain.interceptors.response.use(function (response) {
