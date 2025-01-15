@@ -1,61 +1,87 @@
-import { useParams } from "react-router-dom";
-import travelData from "../../data/travelData";
-import { Typography, Box, Link, Paper } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Typography, Card, CardMedia, CardContent, Grid } from "@mui/material";
+import { getTravelById } from "../../services/Travel/TravelAPI";
 import Comments from "../../components/Comment/Comment";
+import RatingComponent from "../../components/Rating/RatingComponent";
 
 const TravelDetail = () => {
-    const { id } = useParams(); // Retrieve the ID from the URL
-    const location = travelData.find((item) => item.id === id); // Find the location with the matching ID
-    if (!location) {
-        return <div>Location not found.</div>; // Handle case if location is not found
+    const { id } = useParams(); // Lấy id từ URL
+    const [travelDetail, setTravelDetail] = useState(null); // State để lưu thông tin chi tiết
+
+    useEffect(() => {
+        // Fetch travel details từ API
+        const fetchgetTravelById = async () => {
+            try {
+                const response = await getTravelById(id);
+                setTravelDetail(response.data); // Set dữ liệu vào state
+            } catch (error) {
+                console.error("Error fetching travel detail:", error);
+            }
+        };
+        fetchgetTravelById();
+    }, [id]);
+
+    if (!travelDetail) {
+        return <Typography variant="h6">Đang tải dữ liệu...</Typography>;
     }
 
     return (
         <div className="p-4">
             <Typography variant="h4" component="h1" gutterBottom>
-                {location.title}
+                {travelDetail.location}
             </Typography>
-            <img
-                src={location.image}
-                alt={location.title}
-                className="w-full h-80 object-cover rounded-md mb-3"
-            />
-            <Typography variant="body1" paragraph>
-                {location.details}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" paragraph>
-                {location.description}
-            </Typography>
-            <Box mt={2}>
-                <Typography variant="h6" component="span" fontWeight="bold">
-                    Rating: {location.rating} ⭐
-                </Typography>
-            </Box>
-
-            {/* Contact Information */}
-            <Box mt={4} component={Paper} elevation={3} p={2}>
-                <Typography variant="h6" gutterBottom>
-                    Contact to book a tour
-                </Typography>
-                <Typography variant="body1" paragraph>
-                    <strong>Phone:</strong> {location.phone}
-                </Typography>
-                <Typography variant="body1" paragraph>
-                    <strong>Facebook:</strong>{" "}
-                    <Link href={location.facebook} target="_blank" rel="noopener noreferrer" color="primary">
-                        Visit Facebook
-                    </Link>
-                </Typography>
-                <Typography variant="body1" paragraph>
-                    <strong>Instagram:</strong>{" "}
-                    <Link href={location.instagram} target="_blank" rel="noopener noreferrer" color="primary">
-                        Visit Instagram
-                    </Link>
-                </Typography>
-            </Box>
-
-            {/* Comments Section */}
-            <Comments comments={location.comments} />
+            <Grid container spacing={4}>
+                <Grid item xs={12} md={6}>
+                    <Card>
+                        <CardMedia
+                            component="img"
+                            height="300"
+                            image={travelDetail.img}
+                            alt={travelDetail.location}
+                            sx={{ objectFit: "cover" }}
+                        />
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <CardContent>
+                        <Typography variant="h6" gutterBottom>
+                            Mô Tả
+                        </Typography>
+                        <Typography variant="body1" paragraph>
+                            {travelDetail.description}
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Đánh Giá
+                        </Typography>
+                        <RatingComponent reviews={travelDetail.reviews} />
+                        <Typography variant="h6" gutterBottom>
+                            Liên Hệ
+                        </Typography>
+                        <Typography variant="body2" paragraph>
+                            <strong>Điện thoại:</strong> {travelDetail.phone}
+                        </Typography>
+                        <Typography variant="body2" paragraph>
+                            <strong>Facebook:</strong>{" "}
+                            <a href={travelDetail.facebook} target="_blank" rel="noopener noreferrer">
+                                {travelDetail.facebook}
+                            </a>
+                        </Typography>
+                        <Typography variant="body2" paragraph>
+                            <strong>Instagram:</strong>{" "}
+                            <a href={travelDetail.instagram} target="_blank" rel="noopener noreferrer">
+                                {travelDetail.instagram}
+                            </a>
+                        </Typography>
+                    </CardContent>
+                </Grid>
+            </Grid>
+            <div className="mt-4">
+                <Comments comments={travelDetail.reviews} />
+            </div>
+            <Link className="btn btn-primary" to={`/travel`}                >
+                Quay lại danh sách
+            </Link>
         </div>
     );
 };

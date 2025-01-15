@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 
 function Footer() {
     return (
@@ -8,12 +9,25 @@ function Footer() {
                 backgroundColor: "primary.main",
                 color: "white",
                 textAlign: "center",
-                py: 3,
-                marginTop: "auto",
+                width: "100%",
+                p: 4,
             }}
         >
             <Typography variant="body2">
-                &copy; 2025 Sông Cửu Long Travel. All rights reserved.
+                {"Copyright © "}
+                {new Date().getFullYear()}
+                {" Sông Cửu Long Travel. All rights reserved."}
+                <Grid item>
+                    <IconButton color="inherit" href="https://facebook.com" target="_blank">
+                        <Facebook />
+                    </IconButton>
+                    <IconButton color="inherit" href="https://twitter.com" target="_blank">
+                        <Twitter />
+                    </IconButton>
+                    <IconButton color="inherit" href="https://instagram.com" target="_blank">
+                        <Instagram />
+                    </IconButton>
+                </Grid>
             </Typography>
         </Box>
     );

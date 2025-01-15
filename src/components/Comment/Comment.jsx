@@ -1,24 +1,27 @@
-import { Box, Typography, Divider, Rating as MUIRating } from "@mui/material";
+import { Box, Typography, Divider, Rating as MUIRating, Card } from "@mui/material";
 import PropTypes from "prop-types";  // Import PropTypes
 
-const Comments = ({ comments }) => { 
+const Comments = ({ comments }) => {
 
     return (
         <Box mt={4}>
-            <Typography variant="h5" component="h2" gutterBottom>
-                Reviews
+            <Typography variant="h6" gutterBottom>
+                Đánh giá từ người dùng:
             </Typography>
             {comments.map((comment, index) => (
-                <Box key={index} mb={2}>
+                <Card key={index} mb={2} className="mb-3">
                     <Typography variant="h6" component="span" fontWeight="bold">
-                        {comment.user}
+                        {comment.user}- {new Date(comment.date).toLocaleDateString()}
+                    </Typography>
+                    <Typography variant="body2" paragraph>
+                        {comment.comment}
                     </Typography>
                     <Box display="flex" alignItems="center" mb={1}>
                         <MUIRating value={comment.rating} readOnly size="small" />
                     </Box>
                     <Typography variant="body1">{comment.text}</Typography>
                     <Divider sx={{ my: 2 }} />
-                </Box>
+                </Card>
             ))}
         </Box>
     );

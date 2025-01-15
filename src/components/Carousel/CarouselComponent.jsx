@@ -16,7 +16,7 @@ function CarouselComponent() {
                 <div>
                     <img
                         src={h4}
-                        height={'800px'}
+                        height={'500px'}
                         alt="Mekong Delta"
                     />
                     <p className="legend">Khám Phá Đồng Bằng Sông Cửu Long</p>
@@ -24,7 +24,7 @@ function CarouselComponent() {
                 <div>
                     <img
                         src={h5}
-                        height={'800px'}
+                        height={'500px'}
                         alt="Floating Market"
                     />
                     <p className="legend">Chợ Nổi Miền Tây</p>
@@ -32,7 +32,7 @@ function CarouselComponent() {
                 <div>
                     <img
                         src={h6}
-                        height={'800px'}
+                        height={'500px'}
                         alt="Travel"
                     />
                     <p className="legend">Hành Trình Tuyệt Vời</p>
