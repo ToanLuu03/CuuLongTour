@@ -58,7 +58,7 @@ function TravelTip() {
                                     height: '100%',
                                 }}>
                                 <img
-                                    src={tip.image}
+                                    src={tip.image[0]}
                                     alt={tip.description}
                                     style={{ width: '100%', height: '200px', objectFit: 'cover' }}
                                 />

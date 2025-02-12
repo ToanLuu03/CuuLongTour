@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem, A
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/imgs/logo.jpg";
-
+import avatar from "../../assets/imgs/avatar.png";
 const pages = [
     { name: "Home", link: "/" },
     { name: "Tour", link: "/tour" },
@@ -103,7 +103,7 @@ const Navbar = () => {
                     {/* User Settings (Avatar + Dropdown) */}
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
-                            <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" />
+                            <Avatar alt="User Avatar" src={avatar} />
                         </IconButton>
                         <Menu
                             anchorEl={anchorElUser}
