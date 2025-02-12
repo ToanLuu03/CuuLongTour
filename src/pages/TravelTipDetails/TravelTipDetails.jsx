@@ -90,26 +90,47 @@ function TravelTipDetails() {
                         </Box>
                     )}
 
-                    {/* Mixed Content */}
                     {item.type === 'mixed' && (
                         <Box>
-                            <ImageCarousel images={item.image} altText="images" widthImg="50%" />
-
-                            <Typography variant="body2" paragraph align="center">{item.text}</Typography>
-
-                            {item.video && (
-                                <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
-                                    <ReactPlayer
-                                        width="50%"
-                                        height="400px"
-                                        url={item.video}
-                                        controls={true}
-                                    />
+                            {item.data.map((subItem, subIndex) => (
+                                <Box key={subIndex} sx={{ marginBottom: 2 }}>
+                                    {/* Hiển thị văn bản */}
+                                    {subItem.type === 'text' && (
+                                        <Typography variant="body2" paragraph>{subItem.data}</Typography>
+                                    )}
+                                    {/* Hiển thị hình ảnh */}
+                                    {subItem.type === 'image' && (
+                                        <ImageCarousel
+                                            images={[subItem.data]} // Đảm bảo truyền dưới dạng mảng
+                                            altText="Image content"
+                                            widthImg="50%"
+                                            heightImg="400px"
+                                        />
+                                    )}
+                                    {/* Hiển thị video */}
+                                    {subItem.type === 'video' && (
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+                                            <ReactPlayer
+                                                width="50%"
+                                                height="400px"
+                                                url={subItem.data}
+                                                controls={true}
+                                            />
+                                        </Box>
+                                    )}
                                 </Box>
+                            ))}
+
+                            {/* Hiển thị caption nếu có */}
+                            {item.caption && (
+                                <Typography variant="caption" paragraph color="textSecondary" align="center">
+                                    {item.caption}
+                                </Typography>
                             )}
-                            <Typography variant="caption" paragraph color="textSecondary" align="center">{item.caption}</Typography>
                         </Box>
                     )}
+
+
 
                     <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
                 </Box>
