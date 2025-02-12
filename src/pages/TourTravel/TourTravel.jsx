@@ -33,7 +33,7 @@ const TourTravel = () => {
     }, []);
     if (loading) {
         return (
-            <Box className="p-4" display="flex" justifyContent="center">
+            <Box className="p-4" display="flex">
                 <CircularProgress />
             </Box>
         );
