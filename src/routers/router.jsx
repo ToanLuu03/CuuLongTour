@@ -9,8 +9,6 @@ import ForgetPassWord from '../pages/ForgetPassWord/ForgetPassWord';
 import HotelDetail from '../pages/HotelDetail/HotelDetail';
 import TourTravel from '../pages/TourTravel/TourTravel';
 import TourDetails from '../pages/TourDetails/TourDetails';
-// import TravelGuide from '../pages/TravelGuide/TravelGuide';
-// import TravelGuideDetails from '../pages/TravelGuideDetails/TravelGuideDetails';
 import Specialities from '../pages/Specialities/Specialities';
 import TravelTip from '../pages/TravelTip/TravelTip';
 import TravelTipDetails from '../pages/TravelTipDetails/TravelTipDetails';
@@ -29,7 +27,7 @@ export const router = createBrowserRouter([
     exact: true
   },
   {
-    path: "/signup",
+    path: "/forget_password",
     element: <ForgetPassWord />,
     exact: true
   },
