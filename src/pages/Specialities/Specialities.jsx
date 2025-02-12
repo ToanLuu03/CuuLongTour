@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
-import { getAll_Hotels } from "../../services/Hotel/Hotel";
-import { Box, Card, CardContent, CardMedia, CircularProgress, Grid, Typography } from "@mui/material";
-import RatingComponent from "../../components/Rating/RatingComponent";
+import { getAll_Specialty } from "../../services/Specialities/Specialities";
+import { Card, CardContent, CardMedia, Grid, Typography, CircularProgress, Box } from "@mui/material";
 import SeeMore_Button from "../../components/SeeMore_Button/SeeMore_Button";
 
-function Hotel() {
-  const [hotelData, setHotelData] = useState([]); // Initialize as an empty array
+function Specialities() {
+  const [specialitiesData, setSpecialitiesData] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true); // State for loading indicator
   const [error, setError] = useState(null); // State for error handling
+
   useEffect(() => {
-    // Fetch hotel data from the API
-    const fetchHotels = async () => {
+    // Fetch specialities data from the API
+    const fetchSpecialties = async () => {
       try {
-        const response = await getAll_Hotels();
+        const response = await getAll_Specialty();
         if (response.success && Array.isArray(response.data)) {
-          setHotelData(response.data); // Set the hotel data
+          setSpecialitiesData(response.data); // Set the specialities data
         } else {
           console.error("Invalid data format:", response);
           setError("Error: Invalid data format");
         }
       } catch (error) {
-        console.error("Error fetching hotel data:", error);
-        setError("Error: Unable to fetch Hotel data");
+        console.error("Error fetching specialities data:", error);
+        setError("Error: Unable to fetch specialities data");
       } finally {
         setLoading(false); // Stop loading once data is fetched
       }
     };
 
-    fetchHotels();
+    fetchSpecialties();
   }, []);
 
   if (loading) {
@@ -47,41 +47,47 @@ function Hotel() {
       </Box>
     );
   }
+
   return (
     <div className="p-4">
       <Typography variant="h4" component="h1" gutterBottom>
-        Explore Travel Hotels
+        Explore Local Specialties
       </Typography>
       <Grid className="pt-4" container spacing={4}>
-        {hotelData.map((hotel) => (
-          <Grid item xs={12} sm={6} md={4} key={hotel._id}>
+        {specialitiesData.map((speciality) => (
+          <Grid item xs={12} sm={6} md={4} key={speciality._id}>
             <Card
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 height: '100%',
-              }}>
+                '&:hover': {
+                  boxShadow: 6, // Add hover effect
+                },
+              }}
+            >
               <CardMedia
                 component="img"
                 height="200"
-                image={hotel.images[0]} // Use the correct property for image
-                alt={hotel.name}
+                image={speciality.images[0] || 'default-image-url'} // Default image URL if no image is available
+                alt={speciality.name}
                 sx={{ objectFit: 'cover' }}
               />
               <CardContent>
                 <Typography variant="h6" component="h2" gutterBottom>
-                  {hotel.name}
+                  {speciality.name}
+                </Typography>
+                <Typography variant="h6" gutterBottom>
+                  Category: {speciality.category}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" paragraph>
-                  {hotel.address.street}, {hotel.address.city}, {hotel.address.province}, {hotel.address.country}
+                  Price: {speciality.price.toLocaleString()} VND
                 </Typography>
                 <Typography variant="body2" color="textSecondary" paragraph>
-                  Price: {hotel.pricePerNight.toLocaleString()} VND per night
+                  {speciality.description?.slice(0, 100)}...
                 </Typography>
-                {/* Pass hotel.reviews instead of location.reviews */}
-                <RatingComponent reviews={hotel.reviews} />
-                <SeeMore_Button link={`/hotel/hotel_details/${hotel._id}`} />
+                <SeeMore_Button link={`/specialities/${speciality._id}`} />
               </CardContent>
             </Card>
           </Grid>
@@ -91,4 +97,4 @@ function Hotel() {
   );
 }
 
-export default Hotel;
+export default Specialities;

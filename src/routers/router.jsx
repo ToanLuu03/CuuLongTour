@@ -2,13 +2,19 @@ import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login/Login';
 import HomePage from '../pages/HomePage/HomePage';
 import MainLayout from '../pages/MainLayout/MainLayout';
-import Travel from '../pages/Travel/Travel';
 import Contact from '../pages/Contact/Contact';
 import Hotel from '../pages/Hotel/Hotel';
 import SignUp from '../pages/SignUp/SignUp';
 import ForgetPassWord from '../pages/ForgetPassWord/ForgetPassWord';
-import TravelDetail from '../pages/TravelDetail/TravelDetail';
 import HotelDetail from '../pages/HotelDetail/HotelDetail';
+import TourTravel from '../pages/TourTravel/TourTravel';
+import TourDetails from '../pages/TourDetails/TourDetails';
+// import TravelGuide from '../pages/TravelGuide/TravelGuide';
+// import TravelGuideDetails from '../pages/TravelGuideDetails/TravelGuideDetails';
+import Specialities from '../pages/Specialities/Specialities';
+import TravelTip from '../pages/TravelTip/TravelTip';
+import TravelTipDetails from '../pages/TravelTipDetails/TravelTipDetails';
+import SpecialitiesDetails from '../pages/SpecialitiesDetails/SpecialitiesDetails';
 
 
 export const router = createBrowserRouter([
@@ -32,12 +38,15 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "travel", element: <Travel /> },
+      { path: "tour", element: <TourTravel /> },
       { path: "hotel", element: <Hotel /> },
       { path: "contact", element: <Contact /> },
-      { path: "travel/travel_detail/:id", element: <TravelDetail /> },
+      { path: "tour/tour_details/:id", element: <TourDetails /> },
       { path: "hotel/hotel_details/:id", element: <HotelDetail /> },
-
+      { path: "travelTip", element: <TravelTip /> },
+      { path: "travelTip/:id", element: <TravelTipDetails /> },
+      { path: "specialities", element: <Specialities /> },
+      { path: "specialities/:id", element: <SpecialitiesDetails /> },
     ]
   },
 ]);

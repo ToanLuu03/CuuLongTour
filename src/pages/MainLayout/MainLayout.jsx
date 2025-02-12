@@ -2,6 +2,7 @@ import Nav from "../../components/Nav/Nav";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Footer from "../../components/Footer/Footer";
+import ChatBox from "../../components/ChaxBox/ChaxBox";
 function MainLayout() {
     const [collapsed, setCollapsed] = useState(false);
     return (
@@ -9,12 +10,12 @@ function MainLayout() {
             <div className="flex">
                 {/* Sidebar */}
                 <Nav collapsed={collapsed} setCollapsed={setCollapsed} />
-
                 {/* Main Content Area with dynamic margin */}
-                <div className="pt-2">
+                <div className="pt-2 m-4">
                     {/* Outlet renders the child route components */}
                     <Outlet context={{ collapsed }} />
                 </div>
+                <ChatBox />
             </div>
             <Footer />
         </div>
