@@ -46,80 +46,73 @@ function TravelTipDetails() {
         );
     }
     return (
-        <Box sx={{ padding: 3 }}>
+        <Box sx={{
+            padding: 3,
+            maxWidth: '85%',   // Giới hạn chiều rộng tối đa của văn bản
+            marginX: 'auto',
+        }}>
             <Card sx={{ marginBottom: 3 }}>
                 <CardContent>
-                    <Typography variant="h3" gutterBottom>{travelTip.title}</Typography>
-                    <Typography variant="body1" paragraph>{travelTip.description}</Typography>
+                    <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+                        {travelTip.title}
+                    </Typography>
+                    <Typography variant="body1" paragraph sx={{ fontStyle: 'italic' }}>
+                        {travelTip.description}
+                    </Typography>
                 </CardContent>
             </Card>
 
             {/* Hiển thị các nội dung trong content */}
-            {travelTip.content.map((item, index) => (
+            {travelTip.content && Array.isArray(travelTip.content) && travelTip.content.map((item, index) => (
                 <Box key={index} sx={{ marginBottom: 3 }}>
                     {/* Text Content */}
-                    {item.type === 'text' && <Typography variant="body2" paragraph>{item.data}</Typography>}
-
+                    {item.type === 'text' && (
+                        <>
+                            {item.textTitle && (
+                                <Typography variant="h4" paragraph sx={{ fontWeight: 'bold' }}>
+                                    {item.textTitle}
+                                </Typography>
+                            )}
+                            {item.text && item.text.map((text, idx) => (
+                                <Typography variant="body2" paragraph key={idx}>
+                                    {text}
+                                </Typography>
+                            ))}
+                        </>
+                    )}
                     {/* Image Content */}
-                    {item.type === 'image' && (
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    {item.type === 'image' && item.caption && item.image.length > 0 && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                             <CardMedia
                                 component="img"
-                                image={item.data}
+                                image={item.image[0]}
                                 alt={item.caption}
                                 sx={{
                                     borderRadius: 2,
-                                    maxWidth: '50%',
-                                    height: 'auto',
+                                    maxWidth: '70%',
+                                    height: '400px',
                                     boxShadow: 2,
                                 }}
                             />
+                            {/* Hiển thị caption dưới hình ảnh */}
+                            <Typography variant="caption" paragraph color="textSecondary" align="center">
+                                {item.caption}
+                            </Typography>
                         </Box>
                     )}
 
+
+
                     {/* Video Content */}
-                    {item.type === 'video' && (
-                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+                    {item.type === 'video' && item.video && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
                             <ReactPlayer
                                 width="50%"
                                 height="400px"
-                                url={item.data}
+                                url={item.video}
                                 title={item.caption}
                                 controls={true}
                             />
-                        </Box>
-                    )}
-
-                    {item.type === 'mixed' && (
-                        <Box>
-                            {item.data.map((subItem, subIndex) => (
-                                <Box key={subIndex} sx={{ marginBottom: 2 }}>
-                                    {/* Hiển thị văn bản */}
-                                    {subItem.type === 'text' && (
-                                        <Typography variant="body2" paragraph>{subItem.data}</Typography>
-                                    )}
-                                    {/* Hiển thị hình ảnh */}
-                                    {subItem.type === 'image' && (
-                                        <ImageCarousel
-                                            images={[subItem.data]} // Đảm bảo truyền dưới dạng mảng
-                                            altText="Image content"
-                                            widthImg="50%"
-                                            heightImg="400px"
-                                        />
-                                    )}
-                                    {/* Hiển thị video */}
-                                    {subItem.type === 'video' && (
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
-                                            <ReactPlayer
-                                                width="50%"
-                                                height="400px"
-                                                url={subItem.data}
-                                                controls={true}
-                                            />
-                                        </Box>
-                                    )}
-                                </Box>
-                            ))}
 
                             {/* Hiển thị caption nếu có */}
                             {item.caption && (
@@ -129,12 +122,66 @@ function TravelTipDetails() {
                             )}
                         </Box>
                     )}
+                    {item.type === 'mixed' && (
+                        <Box>
+                            {item.textTitle && (
+                                <Typography variant="h4" paragraph sx={{ fontWeight: 'bold' }}>
+                                    {item.textTitle}
+                                </Typography>
+                            )}
+                            {/* Hiển thị văn bản nếu có */}
+                            {item.text && item.text.map((text, idx) => (
+                                <Typography variant="body2" paragraph key={idx}>
+                                    {text}
+                                </Typography>
+                            ))}
 
+                            {/* Hiển thị hình ảnh và caption nếu có */}
+                            {item.image && item.image.length > 0 && (
+                                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                        <ImageCarousel
+                                            images={item.image} // Dữ liệu hình ảnh dưới dạng mảng
+                                            altText="Image content"
+                                            widthImg="70%"
+                                            heightImg="400px"
+                                        />
+                                    </Box>
 
+                                    {/* Hiển thị caption nếu có */}
+                                    {item.caption && (
+                                        <Typography variant="caption" paragraph color="textSecondary" align="center">
+                                            {item.caption}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            )}
 
+                            {/* Hiển thị video và caption nếu có */}
+                            {item.video && (
+                                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: 2 }}>
+                                    <ReactPlayer
+                                        width="50%"
+                                        height="400px"
+                                        url={item.video}
+                                        controls={true}
+                                    />
+
+                                    {/* Hiển thị caption nếu có */}
+                                    {item.caption && (
+                                        <Typography variant="caption" paragraph color="textSecondary" align="center">
+                                            {item.caption}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            )}
+
+                        </Box>
+                    )}
                     <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
                 </Box>
             ))}
+
         </Box>
     );
 }
