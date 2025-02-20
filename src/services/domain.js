@@ -6,5 +6,4 @@ export const domain = axios.create({
 
 domain.interceptors.response.use(function (response) {
   return response;
-
 });

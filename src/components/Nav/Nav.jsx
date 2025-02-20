@@ -48,7 +48,7 @@ const Navbar = () => {
                             alt="Logo"
                             sx={{ height: 70, width: 70, borderRadius: "50%", mr: 2 }}
                         />
-                        <Typography variant="h5" sx={{ color: "#333", fontWeight: "bold" }}>
+                        <Typography sx={{ color: "#333", fontWeight: "bold" }}>
                             Cuu Long Vi Vu
                         </Typography>
                     </Box>
