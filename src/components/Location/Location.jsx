@@ -24,6 +24,7 @@ function Location() {
     fetchData();
   }, []);
 
+  
   const scroll = (direction) => {
     if (scrollRef.current) {
       const scrollAmount = 300;
