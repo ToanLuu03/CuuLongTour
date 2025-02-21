@@ -21,3 +21,13 @@ export const get_travelTipById = async (id) => {
         throw error.response?.data?.message || 'Something went wrong. Please try again.';
     }
 };
+
+export const get_5_travel_tip = async () => {
+    try {
+        const response = await domain.get("api/get_5_travel_tip");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch tours", error);
+        return [];
+    }
+};
