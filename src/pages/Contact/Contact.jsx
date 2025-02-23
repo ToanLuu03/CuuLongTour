@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { TextField, Button, Typography, Box, Grid } from "@mui/material";
+import { TextField, Button, Typography, Box, Grid, Link } from "@mui/material";
+import { Email, Phone, Facebook } from "@mui/icons-material";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ const Contact = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // Hàm xử lý thay đổi trong các input
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -18,10 +19,9 @@ const Contact = () => {
     });
   };
 
-  // Hàm xử lý gửi form
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Gửi dữ liệu form (bạn có thể thực hiện việc gửi dữ liệu API ở đây)
     console.log("Form Data Submitted: ", formData);
     setFormSubmitted(true);
   };
@@ -29,16 +29,16 @@ const Contact = () => {
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Liên hệ với chúng tôi
+        Contact Us
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="body1" paragraph>
-            Bạn có câu hỏi hoặc yêu cầu? Hãy điền thông tin dưới đây và chúng tôi sẽ phản hồi bạn sớm nhất.
+            Do you have a question or request? Please fill out the form below and we will get back to you as soon as possible.
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
-              label="Họ và Tên"
+              label="Full Name"
               variant="outlined"
               fullWidth
               name="name"
@@ -58,7 +58,7 @@ const Contact = () => {
               sx={{ marginBottom: 2 }}
             />
             <TextField
-              label="Tin nhắn"
+              label="Message"
               variant="outlined"
               fullWidth
               multiline
@@ -75,40 +75,55 @@ const Contact = () => {
               color="warning"
               fullWidth
             >
-              Gửi
+              Send
             </Button>
           </form>
           {formSubmitted && (
             <Typography variant="body2" color="green" sx={{ marginTop: 2 }}>
-              Cảm ơn bạn đã gửi yêu cầu. Chúng tôi sẽ phản hồi bạn sớm nhất.
+              Thank you for contacting us. We will get back to you shortly.
             </Typography>
           )}
         </Grid>
+
         <Grid item xs={12} md={6}>
           <Typography variant="h6" gutterBottom>
-            Thông tin liên hệ
+            Contact Information
           </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Địa chỉ:</strong> 216/12 Đường 30/4, phường Hưng Lợi, quận Ninh Kiều, Thành Phố Cần Thơ
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Điện thoại:</strong> 0949415422
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Email:</strong> luutruongtoanltt@gmail.com
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Facebook:</strong>{" "}
-            <a href="https://www.facebook.com/profile.php?id=100064554986406" target="_blank" rel="noopener noreferrer">
-              https://www.facebook.com/profile.php?id=100064554986406
-            </a>
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Instagram:</strong>{" "}
-            <a href="https://www.instagram.com/mekongriversideresort" target="_blank" rel="noopener noreferrer">
-              https://www.instagram.com/mekongriversideresort
-            </a>
-          </Typography>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <Phone sx={{ mr: 1 }} />
+            <Typography variant="body1">
+              <strong>Phone:</strong>{" "}
+              <Link href="tel:0949415422" color="inherit">
+                0949 415 422
+              </Link>
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <Email sx={{ mr: 1 }} />
+            <Typography variant="body1">
+              <strong>Email:</strong>{" "}
+              <Link href="mailto:luutruongtoanltt@gmail.com" color="inherit">
+                luutruongtoanltt@gmail.com
+              </Link>
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <Facebook sx={{ mr: 1 }} />
+            <Typography variant="body1">
+              <strong>Facebook:</strong>{" "}
+              <Link
+                href="https://www.facebook.com/cuulongvivu"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="inherit"
+              >
+               Cuu Long Vi Vu
+              </Link>
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
     </Box>

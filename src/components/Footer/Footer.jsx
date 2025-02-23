@@ -1,5 +1,5 @@
-import { Facebook, Instagram, Twitter } from "@mui/icons-material";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { Facebook, Email, Phone } from "@mui/icons-material";
+import { Box, Grid, IconButton, Typography, Link } from "@mui/material";
 
 function Footer() {
     return (
@@ -18,17 +18,30 @@ function Footer() {
                 {new Date().getFullYear()}
                 {" Sông Cửu Long Travel. All rights reserved."}
             </Typography>
-            <Grid item>
-                <IconButton color="inherit" href="https://facebook.com" target="_blank">
-                    <Facebook />
-                </IconButton>
-                <IconButton color="inherit" href="https://twitter.com" target="_blank">
-                    <Twitter />
-                </IconButton>
-                <IconButton color="inherit" href="https://instagram.com" target="_blank">
-                    <Instagram />
-                </IconButton>
-            </Grid>
+            <Box sx={{ mt: 2 }}>
+                <Grid container justifyContent="center" spacing={2}>
+                    <Grid item>
+                        <IconButton color="inherit" href="https://www.facebook.com/cuulongvivu" target="_blank">
+                            <Facebook />
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <IconButton color="inherit" href="mailto:cuulongvivu@gmail.com">
+                            <Email />
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <IconButton color="inherit" href="tel:0949415422">
+                            <Phone />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </Box>
+            <Typography variant="body2" sx={{ mt: 2 }}>
+                Email: <Link href="mailto:cuulongvivu@gmail.com" color="inherit">cuulongvivu@gmail.com                </Link>
+                <br />
+                Hotline: <Link href="tel:0949415422" color="inherit">0949 415 422</Link>
+            </Typography>
         </Box>
     );
 }
