@@ -123,15 +123,10 @@ function Specialities() {
                                     >
                                         {special.description}
                                     </Typography>
-
                                     <Typography variant="body2"  paragraph>
                                         Price: {special.price.toLocaleString()} VND per night
                                     </Typography>
-
-
-                                    <SeeMore_Button style={{ paddingBottom: 10 }} link={`/specialTip/${special._id}`} />
-
-
+                                    <SeeMore_Button style={{ paddingBottom: 10 }} link={`/specialities/${special._id}`} />
                                 </CardContent>
                             </Card>
                         ))}
