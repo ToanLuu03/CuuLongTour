@@ -21,3 +21,13 @@ export const getSpecialtyById = async (id) => {
         throw error.response?.data?.message || 'Something went wrong. Please try again.';
     }
 };
+
+export const get_5_specialities = async () => {
+    try {
+        const response = await domain.get("api/get_5_specialty  ");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch tours", error);
+        return [];
+    }
+};
