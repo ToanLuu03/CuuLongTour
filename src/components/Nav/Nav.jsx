@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem, Avatar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/imgs/logo.jpeg";
+import logo from "../../assets/imgs/Logo.jpeg";
 import avatar from "../../assets/imgs/avatar.png";
 const pages = [
     { name: "Home", link: "/" },
