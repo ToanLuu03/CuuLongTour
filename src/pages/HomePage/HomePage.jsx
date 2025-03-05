@@ -5,6 +5,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // Thêm style c
 import CarouselComponent from "../../components/Carousel/CarouselComponent";
 import Location from "../../components/Location/Location";
 import Hotel from "../../components/Hotel/Hotel";
+import Specialities from "../../components/Specialities/Specialities";
+import TravelTip from "../../components/TravelTip/TravelTip";
 const HomePage = () => {
   return (
     <Box>
@@ -16,6 +18,10 @@ const HomePage = () => {
 
       {/* Hotels */}
       <Hotel />
+      {/* Specialities */}
+      <Specialities />
+      { /*Travel Tip*/}
+      <TravelTip />
     </Box>
   );
 };

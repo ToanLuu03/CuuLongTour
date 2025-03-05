@@ -34,3 +34,13 @@ export const get_5_Tours = async () => {
         return [];
     }
 };
+
+
+export const bookTour = async (bookingData) => {
+    try {
+        const response = await domain.post("api/create_booking", bookingData);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || "Booking failed. Please try again later.";
+    }
+};

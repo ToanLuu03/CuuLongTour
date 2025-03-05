@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem, Avatar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/imgs/logo.jpg";
+import logo from "../../assets/imgs/logo.jpeg";
 import avatar from "../../assets/imgs/avatar.png";
 const pages = [
     { name: "Home", link: "/" },
@@ -48,9 +48,6 @@ const Navbar = () => {
                             alt="Logo"
                             sx={{ height: 70, width: 70, borderRadius: "50%", mr: 2 }}
                         />
-                        <Typography sx={{ color: "#333", fontWeight: "bold" }}>
-                            Cuu Long Vi Vu
-                        </Typography>
                     </Box>
 
                     {/* Menu Desktop */}
