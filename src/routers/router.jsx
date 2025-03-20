@@ -41,8 +41,8 @@ export const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "tour/tour_details/:id", element: <TourDetails /> },
       { path: "hotel/hotel_details/:id", element: <HotelDetail /> },
-      { path: "travelTip", element: <TravelTip /> },
-      { path: "travelTip/:id", element: <TravelTipDetails /> },
+      { path: "blog", element: <TravelTip /> },
+      { path: "blog/:id", element: <TravelTipDetails /> },
       { path: "specialities", element: <Specialities /> },
       { path: "specialities/:id", element: <SpecialitiesDetails /> },
     ]

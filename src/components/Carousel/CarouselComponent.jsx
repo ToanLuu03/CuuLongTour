@@ -19,7 +19,7 @@ function CarouselComponent() {
                         height={'500px'}
                         alt="Mekong Delta"
                     />
-                    <p className="legend">Khám Phá Đồng Bằng Sông Cửu Long</p>
+                    <p className="legend">Discover the Mekong Delta</p>
                 </div>
                 <div>
                     <img
@@ -27,7 +27,7 @@ function CarouselComponent() {
                         height={'500px'}
                         alt="Floating Market"
                     />
-                    <p className="legend">Chợ Nổi Miền Tây</p>
+                    <p className="legend">Western Floating Market</p>
                 </div>
                 <div>
                     <img
@@ -35,7 +35,7 @@ function CarouselComponent() {
                         height={'500px'}
                         alt="Travel"
                     />
-                    <p className="legend">Hành Trình Tuyệt Vời</p>
+                    <p className="legend">Wonderful Journey</p>
                 </div>
             </Carousel>
         </div>

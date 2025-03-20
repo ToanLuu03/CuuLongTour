@@ -1,39 +1,27 @@
 import { useState } from "react";
-import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem, Avatar } from "@mui/material";
+import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/imgs/Logo.jpeg";
-import avatar from "../../assets/imgs/avatar.png";
 const pages = [
     { name: "Home", link: "/" },
     { name: "Tour", link: "/tour" },
     { name: "Hotel", link: "/hotel" },
-    { name: "Travel Tip", link: "/travelTip" },
+    { name: "Blog", link: "/blog" },
     { name: "Specialities", link: "/specialities" },
     { name: "Contact", link: "/contact" },
 ];
 
-const settings = ["Profile", "Logout"];
 
 const Navbar = () => {
     const location = useLocation();
     const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
-
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
-    };
-
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
     };
 
     return (
@@ -92,25 +80,6 @@ const Navbar = () => {
                                     >
                                         {page.name}
                                     </Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-
-                    {/* User Settings (Avatar + Dropdown) */}
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
-                            <Avatar alt="User Avatar" src={avatar} />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorElUser}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                            sx={{ mt: "45px" }}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

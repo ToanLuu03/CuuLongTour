@@ -64,7 +64,7 @@ function TravelTip() {
                                 />
                                 <CardContent>
                                     <Typography variant="h6">{tip.title}</Typography>
-                                    <SeeMore_Button link={`/travelTip/${tip._id}`} />
+                                    <SeeMore_Button link={`/blog/${tip._id}`} />
                                 </CardContent>
                             </Card>
                         </Grid>

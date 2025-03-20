@@ -28,7 +28,7 @@ const ChatBox = () => {
     const handleSendMessage = async () => {
         if (!message.trim()) return;
 
-        const userMessage = { sender: 'User', text: message };
+        const userMessage = { sender: 'You', text: message };
         setMessages((prevMessages) => [...prevMessages, userMessage]);
         setMessage('');
         setIsTyping(true);
@@ -37,30 +37,43 @@ const ChatBox = () => {
             const response = await axios.post(
                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD2pKxRF5FS1oDLYtVWIG4qHQ1mTUXHDGA',
                 {
-                    contents: [
-                        {
-                            parts: [{ text: message }],
-                        },
-                    ],
+                    contents: [{ parts: [{ text: message }] }],
                 },
                 {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                 }
             );
 
-            const aiResponse = {
-                sender: 'AI',
-                text: response.data.candidates[0].content.parts[0].text,
-            };
-            setMessages((prevMessages) => [...prevMessages, aiResponse]);
+            const fullText = response.data.candidates[0].content.parts[0].text;
+            setIsTyping(false);
+
+            let currentText = "";
+            const textArray = fullText.split(""); // Tách thành từng chữ cái
+
+            textArray.forEach((char, index) => {
+                setTimeout(() => {
+                    currentText += char;
+                    setMessages((prevMessages) => {
+                        const updatedMessages = [...prevMessages];
+                        const lastMessage = updatedMessages[updatedMessages.length - 1];
+
+                        if (lastMessage?.sender === 'AI') {
+                            lastMessage.text = currentText;
+                        } else {
+                            updatedMessages.push({ sender: 'AI', text: currentText });
+                        }
+
+                        return [...updatedMessages];
+                    });
+                }, index * 10);
+            });
+
         } catch (error) {
             console.error('Error connecting to Gemini AI:', error);
-        } finally {
             setIsTyping(false);
         }
     };
+
 
     return (
         <Box position="fixed" bottom={16} right={16} zIndex={1000}>
@@ -78,7 +91,7 @@ const ChatBox = () => {
                         bgcolor="primary.main"
                         color="white"
                     >
-                        <Typography variant="h6">AI Chat</Typography>
+                        <Typography variant="h6">MekongBot</Typography>
                         <IconButton onClick={handleToggleChat} color="inherit">
                             <CloseIcon />
                         </IconButton>
@@ -108,7 +121,7 @@ const ChatBox = () => {
                             fullWidth
                             variant="outlined"
                             size="small"
-                            placeholder="Nhập tin nhắn..."
+                            placeholder="Enter message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}

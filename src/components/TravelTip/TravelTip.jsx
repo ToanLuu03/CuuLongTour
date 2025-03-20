@@ -31,7 +31,7 @@ function TravelTip() {
         <div>
             <Box sx={{ my: 6, px: 4, position: "relative" }}>
                 <Typography variant="h4" sx={{ textAlign: "center", fontWeight: 600, mb: 4 }}>
-                    Travel Tip
+                    Blog Vivu
                 </Typography>
                 <Box
                     sx={{
@@ -123,14 +123,14 @@ function TravelTip() {
                                     </Typography>
 
                                     <Typography
-                                      
+
                                         variant="h6"
-                                        sx={{ 
-                                            fontSize: 16, 
-                                            fontWeight: 200, 
-                                            overflow: "hidden", 
-                                            whiteSpace: "nowrap", 
-                                            textOverflow: "ellipsis" 
+                                        sx={{
+                                            fontSize: 16,
+                                            fontWeight: 200,
+                                            overflow: "hidden",
+                                            whiteSpace: "nowrap",
+                                            textOverflow: "ellipsis"
                                         }}
                                         title={travel.location}
                                     >
@@ -138,7 +138,7 @@ function TravelTip() {
                                     </Typography>
 
 
-                                    <SeeMore_Button style={{ paddingBottom: 10 }} link={`/travelTip/${travel._id}`} />
+                                    <SeeMore_Button style={{ paddingBottom: 10 }} link={`/blog/${travel._id}`} />
 
 
                                 </CardContent>
