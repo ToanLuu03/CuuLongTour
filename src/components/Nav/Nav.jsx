@@ -26,10 +26,10 @@ const Navbar = () => {
 
     return (
         <>
-            <AppBar position="fixed" sx={{ backgroundColor: "#fff", boxShadow: 2, minHeight: "80px" }}>
+            <AppBar position="fixed" sx={{ backgroundColor: "#fff", boxShadow: 2, minHeight: "80px", paddingTop: "6px" }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     {/* Logo */}
-                    <Box component={Link} to="/" sx={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+                    <Box component={Link} to="/" sx={{ display: "flex", justifyContent: "center", alignItems: "center", textDecoration: "none", }}>
                         <Box
                             component="img"
                             src={logo}

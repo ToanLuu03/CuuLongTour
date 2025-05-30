@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 
 function CarouselComponent() {
     return (
-        <div>
+        <div className="pt-10" >
             {/* Carousel */}
             <Carousel
                 showThumbs={false}

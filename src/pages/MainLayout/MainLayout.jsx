@@ -11,7 +11,7 @@ function MainLayout() {
                 {/* Sidebar */}
                 <Nav collapsed={collapsed} setCollapsed={setCollapsed} />
                 {/* Main Content Area with dynamic margin */}
-                <div className="pt-2 m-4">
+                <div className="">
                     {/* Outlet renders the child route components */}
                     <Outlet context={{ collapsed }} />
                 </div>
