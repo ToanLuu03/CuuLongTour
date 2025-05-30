@@ -9,7 +9,11 @@ import Specialities from "../../components/Specialities/Specialities";
 import TravelTip from "../../components/TravelTip/TravelTip";
 const HomePage = () => {
   return (
-    <Box>
+    <Box sx={{
+      
+      px: { xs: 2, sm: 4 },
+      background: "linear-gradient(135deg,rgb(236, 238, 241) 0%,rgb(255, 255, 255) 100%)",
+    }}>
       {/* Carousel */}
       <CarouselComponent />
 
