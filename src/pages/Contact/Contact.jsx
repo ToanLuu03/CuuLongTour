@@ -104,8 +104,8 @@ const Contact = () => {
             <Email sx={{ mr: 1 }} />
             <Typography variant="body1">
               <strong>Email:</strong>{" "}
-              <Link href="mailto:luutruongtoanltt@gmail.com" color="inherit">
-                luutruongtoanltt@gmail.com
+              <Link href="cuulongvivu@gmail.com" color="inherit">
+                cuulongvivu@gmail.com
               </Link>
             </Typography>
           </Box>
