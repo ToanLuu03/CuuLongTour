@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
     Box,
@@ -12,6 +12,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import { Send as SendIcon } from '@mui/icons-material';
+import PropTypes from 'prop-types';
 
 const ChatBotCom = ({ messages, setMessages, isTyping, setIsTyping, initialized }) => {
     const [message, setMessage] = useState('');
@@ -207,5 +208,11 @@ const ChatBotCom = ({ messages, setMessages, isTyping, setIsTyping, initialized 
         </>
     );
 };
-
+ChatBotCom.propTypes = {
+    messages: PropTypes.array.isRequired,
+    setMessages: PropTypes.func.isRequired,
+    isTyping: PropTypes.bool.isRequired,
+    setIsTyping: PropTypes.func.isRequired,
+    initialized: PropTypes.bool
+};
 export default ChatBotCom;
