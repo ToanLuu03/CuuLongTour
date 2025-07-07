@@ -17,6 +17,7 @@ import {
     Hotel as HotelIcon,
     DirectionsCar as DirectionsCarIcon
 } from '@mui/icons-material';
+import PropTypes from 'prop-types';
 
 const TravelRecommendation = ({ messages, setMessages, isTyping, setIsTyping }) => {
     const [userPreferences, setUserPreferences] = useState({
@@ -314,5 +315,11 @@ Answer in English, concise, easy to understand, divided into clear categories.`;
         </>
     );
 };
-
+TravelRecommendation.propTypes = {
+    messages: PropTypes.array.isRequired,
+    setMessages: PropTypes.func.isRequired,
+    isTyping: PropTypes.bool.isRequired,
+    setIsTyping: PropTypes.func.isRequired,
+    initialized: PropTypes.bool
+};
 export default TravelRecommendation;
