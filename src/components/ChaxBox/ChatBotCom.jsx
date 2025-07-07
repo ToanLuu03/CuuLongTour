@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
     Box,
@@ -14,8 +14,16 @@ import {
 import { Send as SendIcon } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 
-const ChatBotCom = ({ messages, setMessages, isTyping, setIsTyping, initialized }) => {
+const ChatBotCom = ({
+    messages,
+    setMessages,
+    isTyping,
+    setIsTyping,
+    initialized,
+    setInitialized
+}) => {
     const [message, setMessage] = useState('');
+    const initializedRef = useRef(false);
 
     const introMessage = `Hello! I'm your Mekong Delta AI assistant. Ask me anything about:
 - Travel information
@@ -25,10 +33,14 @@ const ChatBotCom = ({ messages, setMessages, isTyping, setIsTyping, initialized 
 - Or anything else about the Mekong Delta!`;
 
     useEffect(() => {
-        if (initialized && messages.length === 0) {
+        if (!initialized && !initializedRef.current) {
+            initializedRef.current = true;
+            setInitialized(true);
+            setMessages([]);
             addBotMessage(introMessage);
+            console.log('ChatBotCom initialized');
         }
-    }, [initialized, messages.length]);
+    }, [initialized, setInitialized, setMessages]);
 
     const addBotMessage = (text) => {
         setMessages(prev => [...prev, { sender: 'MekongBot', text }]);
@@ -213,6 +225,7 @@ ChatBotCom.propTypes = {
     setMessages: PropTypes.func.isRequired,
     isTyping: PropTypes.bool.isRequired,
     setIsTyping: PropTypes.func.isRequired,
-    initialized: PropTypes.bool
+    initialized: PropTypes.bool.isRequired,
+    setInitialized: PropTypes.func.isRequired
 };
 export default ChatBotCom;
