@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
     Box,
@@ -19,7 +19,14 @@ import {
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 
-const TravelRecommendation = ({ messages, setMessages, isTyping, setIsTyping }) => {
+const TravelRecommendation = ({
+    messages,
+    setMessages,
+    isTyping,
+    setIsTyping,
+    initialized,
+    setInitialized
+}) => {
     const [userPreferences, setUserPreferences] = useState({
         location: '',
         interest: '',
@@ -28,6 +35,7 @@ const TravelRecommendation = ({ messages, setMessages, isTyping, setIsTyping }) 
         companion: ''
     });
     const [step, setStep] = useState(0);
+    const initializedRef = useRef(false);
 
     const questions = [
         {
@@ -72,13 +80,16 @@ I can help you plan your perfect trip to the Mekong Delta. Just answer a few sho
 - Useful travel tips
 
 Get started by clicking the button below!`;
-
     useEffect(() => {
-        if (messages.length === 0) {
+        if (!initialized && !initializedRef.current) {
+            initializedRef.current = true;
+            setInitialized(true);
+            setMessages([]);
             setStep(0);
             addBotMessage(introMessage);
+            console.log('TravelRecommendation initialized');
         }
-    }, [messages.length]);
+    }, [initialized, setInitialized, setMessages]);
 
     const startRecommendation = () => {
         setStep(1);
@@ -320,6 +331,7 @@ TravelRecommendation.propTypes = {
     setMessages: PropTypes.func.isRequired,
     isTyping: PropTypes.bool.isRequired,
     setIsTyping: PropTypes.func.isRequired,
-    initialized: PropTypes.bool
+    initialized: PropTypes.bool.isRequired,
+    setInitialized: PropTypes.func.isRequired
 };
 export default TravelRecommendation;

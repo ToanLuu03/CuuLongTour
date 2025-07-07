@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
     Box,
     IconButton,
@@ -23,31 +23,31 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
-    const [initialized, setInitialized] = useState(false);
+    const [initialized, setInitialized] = useState({
+        travel: false,
+        chat: false
+    });
 
     const handleToggleChat = () => {
-        setIsChatOpen(!isChatOpen);
-        if (!isChatOpen) {
-            setInitialized(false);
+        const newState = !isChatOpen;
+        setIsChatOpen(newState);
+
+        if (newState) {
+            setMessages([]);
+            setInitialized({
+                travel: false,
+                chat: false
+            });
         }
     };
-
-    useEffect(() => {
-        if (isChatOpen && !initialized) {
-            setMessages([]);
-            setInitialized(true);
-        }
-    }, [isChatOpen, initialized]);
-
-    useEffect(() => {
-        if (isChatOpen) {
-            setMessages([]);
-        }
-    }, [activeTab, isChatOpen]);
 
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
         setMessages([]);
+        setInitialized(prev => ({
+            ...prev,
+            [newValue === 0 ? 'travel' : 'chat']: false
+        }));
     };
 
     return (
@@ -145,7 +145,8 @@ const ChatBox = () => {
                                 setMessages={setMessages}
                                 isTyping={isTyping}
                                 setIsTyping={setIsTyping}
-                                initialized={initialized && isChatOpen}
+                                initialized={initialized.travel}
+                                setInitialized={(value) => setInitialized(prev => ({ ...prev, travel: value }))}
                             />
                         ) : (
                             <ChatBotCom
@@ -153,7 +154,8 @@ const ChatBox = () => {
                                 setMessages={setMessages}
                                 isTyping={isTyping}
                                 setIsTyping={setIsTyping}
-                                initialized={initialized && isChatOpen}
+                                initialized={initialized.chat}
+                                setInitialized={(value) => setInitialized(prev => ({ ...prev, chat: value }))}
                             />
                         )}
                     </Box>
