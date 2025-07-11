@@ -1,0 +1,23 @@
+/* src/styles/global.css */
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 400;
+}
+
+/* Optional: heading đậm hơn */
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 600;
+}
+
+/* Optional: dùng Poppins cho code cũng được nếu bạn thích đồng bộ */
+code,
+pre {
+    font-family: 'Poppins', monospace;
+}
