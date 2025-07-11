@@ -481,11 +481,11 @@ const TourTravel = () => {
                             fontWeight: 600,
                             textTransform: 'none',
                             border: "none",
-                            '&:hover': {
+                            '&:hover': {  
                               backgroundColor: "#1d4ed8",
                             }
                           }}
-                          link={`/tours/${tour._id}`}
+                          link={`/tour/tour_details/${tour._id}`}
                         >
                           View Details
                         </SeeMore_Button>
