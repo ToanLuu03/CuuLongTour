@@ -44,3 +44,24 @@ export const bookTour = async (bookingData) => {
         throw error.response?.data?.message || "Booking failed. Please try again later.";
     }
 };
+export const toursLocation = async (userPreferences) => {
+    try {
+        const { location } = userPreferences;
+
+        if (!location) {
+            throw new Error('Location parameter is required');
+        }
+
+        const response = await domain.get("/api/tour_ai", {
+            params: { location },
+            headers: { 'Accept': 'application/json' }
+        });
+
+        // Chỉ trả về mảng các ID tour
+        return response.data?.data;
+
+    } catch (error) {
+        console.error('Error fetching tours:', error);
+        throw error.response?.data?.message || error.message || "Failed to fetch tours";
+    }
+};

@@ -18,6 +18,8 @@ import {
     DirectionsCar as DirectionsCarIcon
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { toursLocation } from '../../services/Tour/Tour';
 
 const TravelRecommendation = ({
     messages,
@@ -36,12 +38,48 @@ const TravelRecommendation = ({
     });
     const [step, setStep] = useState(0);
     const initializedRef = useRef(false);
+    const parseMessageWithLinks = (text) => {
+        const parts = text.split(/(\[.*?\]\(\/tour\/tour_details\/.*?\))/g);
 
+        return parts.map((part, index) => {
+            const match = part.match(/\[(.*?)\]\(\/tour\/tour_details\/(.*?)\)/);
+            if (match) {
+                return (
+                    <Link
+                        key={index}
+                        to={`/tour/tour_details/${match[2]}`}
+                        style={{
+                            color: '#2e7d32',
+                            textDecoration: 'underline',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        {match[1]}
+                    </Link>
+                );
+            }
+            return part;
+        });
+    };
     const questions = [
         {
             field: 'location',
             question: 'Which province in the Mekong Delta do you want to visit?',
-            options: ['Can Tho', 'An Giang', 'Kien Giang', 'Tien Giang', 'Ben Tre', 'Soc Trang'],
+            options: [
+                'Can Tho',      // Thành phố trực thuộc trung ương
+                'An Giang',
+                'Ben Tre',
+                'Bac Lieu',
+                'Ca Mau',
+                'Dong Thap',
+                'Hau Giang',
+                'Kien Giang',
+                'Long An',
+                'Soc Trang',
+                'Tien Giang',
+                'Tra Vinh',
+                'Vinh Long'
+            ],
             icon: <TravelExploreIcon />
         },
         {
@@ -129,58 +167,164 @@ Get started by clicking the button below!`;
         setMessages(prev => [...prev, { sender: 'You', text }]);
     };
 
+    //     const generateRecommendation = async () => {
+    //         setIsTyping(true);
+    //         addBotMessage('Creating travel recommendations tailored to you...');
+    //         try {
+    //             const prompt = `I am a tourist with the following information:
+
+    // Location: ${userPreferences.location || 'unknown'}
+
+    // Interests: ${userPreferences.interest || 'unknown'}
+
+    // Budget: ${userPreferences.budget || 'unknown'}
+
+    // Duration: ${userPreferences.duration || 'unknown'}
+
+    // Travel companion: ${userPreferences.companion || 'unknown'}
+
+    // Please propose a detailed travel plan in the Mekong Delta with:
+
+    // 1. Suitable attractions
+
+    // 2. Local restaurants/cuisine
+
+    // 3. Accommodation
+
+    // 4. Transportation
+
+    // 5. Useful travel tips
+
+    // Answer in English, concise, easy to understand, divided into clear categories.`;
+
+    //             const response = await axios.post(
+    //                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD2pKxRF5FS1oDLYtVWIG4qHQ1mTUXHDGA',
+    //                 {
+    //                     contents: [{ parts: [{ text: prompt }] }],
+    //                 },
+    //                 {
+    //                     headers: { 'Content-Type': 'application/json' },
+    //                 }
+    //             );
+
+    //             const fullText = response.data.candidates[0].content.parts[0].text;
+
+    //             await typeWriterEffect(fullText, 10);
+    //             setStep(6);
+    //         } catch (error) {
+    //             console.error('Error connecting to Gemini AI:', error);
+    //             addBotMessage('Sorry, I had trouble creating the suggestion. Please try again later.');
+    //         } finally {
+    //             setIsTyping(false);
+    //         }
+    //     };
+    // const generateRecommendation = async () => {
+    //     setIsTyping(true);
+    //     addBotMessage('Creating travel recommendations tailored to you...');
+
+    //     try {
+    //         // Lấy danh sách tour từ API theo location
+    //         const tourIds = await toursLocation(userPreferences);
+    //         console.log("response", tourIds)
+
+    //         // Tạo message hiển thị
+    //         let toursMessage = '';
+    //         if (tourIds.length > 0) {
+    //             toursMessage = '\n\n**Available Tour IDs:**\n';
+    //             tourIds.forEach((id, index) => {
+    //                 toursMessage += `${index + 1}. Tour ID: /tour/tour_details/${id.id}\n`;
+    //             });
+    //         }
+
+    //         // Tạo prompt cho AI
+    //         const prompt = `I am a tourist with the following information:
+    //     Location: ${userPreferences.location || 'unknown'}
+    //     Interests: ${userPreferences.interest || 'unknown'}
+    //     Budget: ${userPreferences.budget || 'unknown'}
+    //     Duration: ${userPreferences.duration || 'unknown'}
+    //     Travel companion: ${userPreferences.companion || 'unknown'}
+
+    //     Please propose a detailed travel plan in the Mekong Delta with:
+    //     1. Suitable attractions
+    //     2. Local restaurants/cuisine
+    //     3. Accommodation
+    //     4. Transportation
+    //     5. Useful travel tips
+
+    //     Answer in English, concise, easy to understand, divided into clear categories.`;
+
+    //         const response = await axios.post(
+    //             'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD2pKxRF5FS1oDLYtVWIG4qHQ1mTUXHDGA',
+    //             {
+    //                 contents: [{ parts: [{ text: prompt }] }],
+    //             }
+    //         );
+
+    //         let fullText = response.data.candidates[0].content.parts[0].text;
+    //         fullText += toursMessage;
+
+    //         await typeWriterEffect(fullText, 10);
+    //         setStep(6);
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         addBotMessage('Xin lỗi, tôi gặp lỗi khi tạo đề xuất. Vui lòng thử lại sau.');
+    //     } finally {
+    //         setIsTyping(false);
+    //     }
+    // };
     const generateRecommendation = async () => {
         setIsTyping(true);
         addBotMessage('Creating travel recommendations tailored to you...');
+
         try {
+            // Lấy danh sách tour từ API theo location
+            const tours = await toursLocation(userPreferences);
+            console.log(tours)
+            // Tạo message chỉ chứa các link
+            let toursMessage = '';
+            if (tours.length > 0) {
+                toursMessage = '\n\n';
+                tours.forEach((tourId) => {
+                    toursMessage += `🔗 [View Tour](/tour/tour_details/${tourId})\n`;
+                });
+            }
+            console.log(toursMessage)
+            // Tạo prompt cho AI
             const prompt = `I am a tourist with the following information:
+        Location: ${userPreferences.location || 'unknown'}
+        Interests: ${userPreferences.interest || 'unknown'}
+        Budget: ${userPreferences.budget || 'unknown'}
+        Duration: ${userPreferences.duration || 'unknown'}
+        Travel companion: ${userPreferences.companion || 'unknown'}
 
-Location: ${userPreferences.location || 'unknown'}
+        Please propose a detailed travel plan in the Mekong Delta with:
+        1. Suitable attractions
+        2. Local restaurants/cuisine
+        3. Accommodation
+        4. Transportation
+        5. Useful travel tips
 
-Interests: ${userPreferences.interest || 'unknown'}
-
-Budget: ${userPreferences.budget || 'unknown'}
-
-Duration: ${userPreferences.duration || 'unknown'}
-
-Travel companion: ${userPreferences.companion || 'unknown'}
-
-Please propose a detailed travel plan in the Mekong Delta with:
-
-1. Suitable attractions
-
-2. Local restaurants/cuisine
-
-3. Accommodation
-
-4. Transportation
-
-5. Useful travel tips
-
-Answer in English, concise, easy to understand, divided into clear categories.`;
+        Answer in English, concise, easy to understand, divided into clear categories.`;
 
             const response = await axios.post(
                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD2pKxRF5FS1oDLYtVWIG4qHQ1mTUXHDGA',
                 {
                     contents: [{ parts: [{ text: prompt }] }],
-                },
-                {
-                    headers: { 'Content-Type': 'application/json' },
                 }
             );
 
-            const fullText = response.data.candidates[0].content.parts[0].text;
+            let fullText = toursMessage;
+            fullText += response.data.candidates[0].content.parts[0].text;
 
             await typeWriterEffect(fullText, 10);
             setStep(6);
         } catch (error) {
-            console.error('Error connecting to Gemini AI:', error);
-            addBotMessage('Sorry, I had trouble creating the suggestion. Please try again later.');
+            console.error('Error:', error);
+            addBotMessage('Sorry, I encountered an error while creating recommendations. Please try again later.');
         } finally {
             setIsTyping(false);
         }
     };
-
     const renderQuickOptions = () => {
         if (step === 0) {
             return (
@@ -284,11 +428,30 @@ Answer in English, concise, easy to understand, divided into clear categories.`;
                                 border: '1px solid #e8f5e9',
                                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                             }}>
-                                <Typography variant="body1" whiteSpace="pre-wrap" sx={{
+                                {/* <Typography variant="body1" whiteSpace="pre-wrap" sx={{
                                     lineHeight: 1.6,
                                     color: msg.sender === 'You' ? '#1b5e20' : 'inherit'
                                 }}>
                                     {msg.text}
+                                </Typography> */}
+                                <Typography
+                                    variant="body1"
+                                    whiteSpace="pre-wrap"
+                                    sx={{
+                                        lineHeight: 1.6,
+                                        color: msg.sender === 'You' ? '#1b5e20' : 'inherit',
+                                        '& a': {
+                                            color: '#2e7d32',
+                                            textDecoration: 'underline',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: '#1b5e20',
+                                            }
+                                        }
+                                    }}
+                                    component="div"
+                                >
+                                    {parseMessageWithLinks(msg.text)}
                                 </Typography>
                             </Paper>
                         </ListItem>
