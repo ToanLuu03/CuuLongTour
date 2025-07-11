@@ -2,19 +2,26 @@ import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function SeeMore_Button({ link }) {
+function SeeMore_Button({ link, style, sx, children }) {
     return (
-
         <Link to={link} style={{ textDecoration: 'none' }}>
-            <Button variant="outlined" fullWidth>
-                See more
+            <Button
+                variant="outlined"
+                fullWidth
+                style={style}
+                sx={sx}
+            >
+                {children || "See more"}
             </Button>
         </Link>
-    )
+    );
 }
-// Add prop types validation
+
 SeeMore_Button.propTypes = {
-    link: PropTypes.string
+    link: PropTypes.string,
+    style: PropTypes.object,
+    sx: PropTypes.object,
+    children: PropTypes.node,
 };
 
-export default SeeMore_Button
+export default SeeMore_Button;

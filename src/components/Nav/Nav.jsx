@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppBar, Toolbar, Box, Typography, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/imgs/Logo.jpeg";
 const pages = [
     { name: "Home", link: "/" },
@@ -12,9 +12,18 @@ const pages = [
     { name: "Contact", link: "/contact" },
 ];
 
+const sectionMap = {
+    Home: "hero",
+    Tour: "location",
+    Hotel: "hotel",
+    Blog: "traveltip",
+    Specialities: "specialities",
+    Contact: "footer", // hoặc id bạn đặt cho phần contact/footer
+};
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState(null);
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -22,6 +31,29 @@ const Navbar = () => {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+
+    const handleNavClick = (page) => {
+        if (page.name === "Contact") {
+            navigate("/contact");
+            handleCloseNavMenu();
+            return;
+        }
+        const sectionId = sectionMap[page.name];
+        const scrollToSection = () => {
+            const el = document.getElementById(sectionId);
+            if (el) {
+                const y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+                window.scrollTo({ top: y, behavior: "smooth" });
+            }
+        };
+        if (location.pathname === "/") {
+            scrollToSection();
+        } else {
+            navigate("/", { replace: false });
+            setTimeout(scrollToSection, 300);
+        }
+        handleCloseNavMenu();
     };
 
     return (
@@ -43,13 +75,13 @@ const Navbar = () => {
                         {pages.map((page) => (
                             <Button
                                 key={page.name}
-                                component={Link}
-                                to={page.link}
+                                onClick={() => handleNavClick(page)}
                                 sx={{
-                                    color: location.pathname === page.link ? "blue" : "#333",
-                                    fontWeight: location.pathname === page.link ? "bold" : "normal",
+                                    color: location.pathname === "/" && sectionMap[page.name] ? "#2E8B57" : "#333",
+                                    fontWeight: location.pathname === "/" && sectionMap[page.name] ? "bold" : "normal",
                                     textTransform: "none",
                                     fontSize: "1.1rem",
+                                   
                                     "&:hover": { color: "blue" },
                                 }}
                             >
@@ -70,7 +102,10 @@ const Navbar = () => {
                             sx={{ display: { xs: "block", md: "none" } }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} to={page.link}>
+                                <MenuItem
+                                    key={page.name}
+                                    onClick={() => handleNavClick(page)}
+                                >
                                     <Typography
                                         textAlign="center"
                                         sx={{

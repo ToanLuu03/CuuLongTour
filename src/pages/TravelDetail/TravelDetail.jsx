@@ -27,7 +27,7 @@ const TravelDetail = () => {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-0">
             <Typography variant="h4" component="h1" gutterBottom>
                 {travelDetail.location}
             </Typography>
@@ -76,6 +76,32 @@ const TravelDetail = () => {
                     </CardContent>
                 </Grid>
             </Grid>
+            {travelDetail.videoUrl && (
+                <Card sx={{ mt: 2 }}>
+                    <CardContent>
+                        <Typography variant="h6" gutterBottom>
+                            Video
+                        </Typography>
+                        <div style={{ position: "relative", paddingTop: "56.25%" }}>
+                            <iframe
+                                src={travelDetail.videoUrl}
+                                title="Travel Video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    border: 0,
+                                    borderRadius: 8,
+                                }}
+                            />
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
             <div className="mt-4">
                 <Comments comments={travelDetail.reviews} />
             </div>

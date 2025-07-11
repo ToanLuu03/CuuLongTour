@@ -26,7 +26,7 @@ function Footer() {
                     fontSize: { xs: "1rem", sm: "1.2rem" }, // Smaller font
                 }}
             >
-                Sông Cửu Long Travel
+                Cuu Long ViVu
             </Typography>
 
             {/* Social Media Icons */}
@@ -123,7 +123,7 @@ function Footer() {
                     opacity: 0.8,
                 }}
             >
-                © {new Date().getFullYear()} Sông Cửu Long Travel. All rights reserved.
+                © {new Date().getFullYear()} Cuu Long ViVu. All rights reserved.
             </Typography>
         </Box>
     );
