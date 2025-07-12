@@ -2,7 +2,7 @@ import { Box, Card, CardContent, CardMedia, Typography, Stack } from "@mui/mater
 import { useEffect, useState, useRef } from "react";
 import SeeMore_Button from "../SeeMore_Button/SeeMore_Button";
 import { get_5_specialities } from "../../services/Specialities/Specialities";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
@@ -21,21 +21,6 @@ function Specialities() {
     };
     fetchData();
   }, []);
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const { current } = scrollRef;
-      const scrollAmount = current.offsetWidth;
-      const scrollLeft = direction === 'left'
-        ? current.scrollLeft - scrollAmount
-        : current.scrollLeft + scrollAmount;
-
-      current.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,7 +44,7 @@ function Specialities() {
             letterSpacing: 0.5,
           }}
         >
-          Specialities
+          Taste of the Mekong
         </Typography>
 
         <Box sx={{ position: 'relative' }}>

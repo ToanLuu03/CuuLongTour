@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, CardMedia, Typography, IconButton, Stack } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography, Stack } from "@mui/material";
 import { useEffect, useState, useRef } from "react"; // Thêm useRef
 import SeeMore_Button from "../SeeMore_Button/SeeMore_Button";
 import { get_5_Hotels } from "../../services/Hotel/Hotel";
 import { LocationOn } from "@mui/icons-material";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
@@ -21,21 +21,6 @@ function Hotel() {
     };
     fetchData();
   }, []);
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const { current } = scrollRef;
-      const scrollAmount = current.offsetWidth;
-      const scrollLeft = direction === 'left'
-        ? current.scrollLeft - scrollAmount
-        : current.scrollLeft + scrollAmount;
-
-      current.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,7 +44,7 @@ function Hotel() {
             letterSpacing: 0.5,
           }}
         >
-          Hotels
+          Stay in the Heart of the Mekong Delta
         </Typography>
 
         <Box sx={{ position: 'relative' }}>

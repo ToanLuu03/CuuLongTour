@@ -10,7 +10,7 @@ import HeroSection from "../../components/Homepage/HeroSection";
 const HomePage = () => {
   return (
     <Box sx={{
-      
+
       px: { xs: 2, sm: 4 },
       background: "linear-gradient(135deg,rgb(236, 238, 241) 0%,rgb(255, 255, 255) 100%)",
     }}>
@@ -23,12 +23,13 @@ const HomePage = () => {
       <Box id="hotel">
         <Hotel />
       </Box>
-      <Box id="specialities">
-        <Specialities />
-      </Box>
       <Box id="traveltip">
         <TravelTip />
       </Box>
+      <Box id="specialities">
+        <Specialities />
+      </Box>
+
     </Box>
   );
 };

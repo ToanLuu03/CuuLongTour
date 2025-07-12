@@ -3,30 +3,15 @@ import { useParams } from 'react-router-dom';
 import {
     Typography,
     Box,
-    CircularProgress,
-    Card,
-    CardContent,
     CardMedia,
     Container,
-    Chip,
-    Divider,
-    useTheme,
-    Avatar,
     Button,
-    IconButton,
     Stack,
     Paper,
     Fade,
     Skeleton
 } from '@mui/material';
-import {
-    Star,
-    TravelExplore,
-    PlayArrow,
-    Visibility
-} from '@mui/icons-material';
 import { get_travelTipById } from "../../services/TravelTip/TravelTip";
-import ReactPlayer from 'react-player';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -58,7 +43,52 @@ function TravelTipDetails() {
 
         fetchTravelTipDetails();
     }, [id]);
+    const normalizeImageUrl = (url) => {
+        if (!url) return '';
 
+        // URL trống
+        if (typeof url !== 'string') return '';
+
+        // URL đã là https hợp lệ
+        if (url.startsWith('https://') && !url.includes('drive.google.com')) {
+            return url;
+        }
+
+        // Xử lý Google Drive link
+        if (url.includes('drive.google.com')) {
+            const fileId = url.match(/[-\w]{25,}/)?.[0] || url.split('id=')[1];
+            if (fileId) {
+                return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+            }
+        }
+
+        // Xử lý base64 image
+        if (url.startsWith('data:image')) return url;
+
+        // Xử lý local path (nếu có)
+        if (url.startsWith('/')) return url;
+
+        // Trường hợp không xác định
+        return '';
+    };
+    const normalizeVideoUrl = (url) => {
+        if (!url) return null;
+
+        // Nếu đã là URL trực tiếp
+        if (url.includes('youtube.com') || url.includes('vimeo.com')) {
+            return url;
+        }
+
+        // Xử lý Google Drive link
+        if (url.includes('drive.google.com')) {
+            const fileId = url.match(/[-\w]{25,}/)?.[0] || url.split('id=')[1];
+            if (fileId) {
+                return `https://drive.google.com/file/d/${fileId}/preview`;
+            }
+        }
+
+        return url;
+    };
     if (loading) {
         return (
             <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', py: 3 }}>
@@ -122,7 +152,7 @@ function TravelTipDetails() {
                         >
                             <Box sx={{ p: 4 }}>
                                 {/* Meta information */}
-                                
+
 
                                 {/* Title and description */}
                                 <Typography
@@ -224,12 +254,15 @@ function TravelTipDetails() {
                                                 >
                                                     <CardMedia
                                                         component="img"
-                                                        image={item.image[0]}
+                                                        image={normalizeImageUrl(item.image[0])}
                                                         alt={item.caption}
                                                         sx={{
                                                             width: '100%',
                                                             height: '500px',
                                                             objectFit: 'cover'
+                                                        }}
+                                                        onError={(e) => {
+                                                            e.target.src = 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
                                                         }}
                                                     />
                                                 </Box>
@@ -248,6 +281,7 @@ function TravelTipDetails() {
                                         )}
 
                                         {/* Video Content */}
+                                        {/* Video Content */}
                                         {item.type === 'video' && item.video && (
                                             <Box>
                                                 <Box
@@ -256,14 +290,24 @@ function TravelTipDetails() {
                                                         overflow: 'hidden',
                                                         boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                                                         mb: 3,
-                                                        position: 'relative'
+                                                        position: 'relative',
+                                                        pt: '56.25%', // 16:9 aspect ratio
+                                                        height: 0
                                                     }}
                                                 >
-                                                    <ReactPlayer
-                                                        width="100%"
-                                                        height="500px"
-                                                        url={item.video}
-                                                        controls={true}
+                                                    <iframe
+                                                        src={normalizeVideoUrl(item.video)}
+                                                        title="Video player"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            border: 'none'
+                                                        }}
                                                     />
                                                 </Box>
                                                 {item.caption && (
@@ -281,7 +325,6 @@ function TravelTipDetails() {
                                                 )}
                                             </Box>
                                         )}
-
                                         {/* Mixed Content */}
                                         {item.type === 'mixed' && (
                                             <Box>
@@ -310,7 +353,7 @@ function TravelTipDetails() {
                                                     </Typography>
                                                 )}
 
-                                                {item.text && item.text.map((text, idx) => (
+                                                {item.text?.map((text, idx) => (
                                                     <Typography
                                                         variant="body1"
                                                         paragraph
@@ -326,7 +369,7 @@ function TravelTipDetails() {
                                                     </Typography>
                                                 ))}
 
-                                                {item.image && item.image.length > 0 && (
+                                                {item.image?.length > 0 && (
                                                     <Box sx={{ mb: 3 }}>
                                                         <Box
                                                             sx={{
@@ -337,7 +380,7 @@ function TravelTipDetails() {
                                                             }}
                                                         >
                                                             <ImageCarousel
-                                                                images={item.image}
+                                                                images={item.image.map(img => normalizeImageUrl(img))}
                                                                 altText="Travel content"
                                                                 widthImg="100%"
                                                                 heightImg="400px"
@@ -360,34 +403,31 @@ function TravelTipDetails() {
                                                 )}
 
                                                 {item.video && (
-                                                    <Box>
+                                                    <Box sx={{ mb: 3 }}>
                                                         <Box
                                                             sx={{
                                                                 borderRadius: 2,
                                                                 overflow: 'hidden',
                                                                 boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-                                                                mb: 2
+                                                                mb: 2,
+                                                                position: 'relative',
+                                                                pt: '56.25%', // 16:9 aspect ratio
+                                                                height: 0
                                                             }}
                                                         >
-                                                            <ReactPlayer
-                                                                width="100%"
-                                                                height="400px"
-                                                                url={item.video}
-                                                                controls={true}
-                                                                light={true}
-                                                                playIcon={
-                                                                    <Box sx={{
-                                                                        bgcolor: 'rgba(0,0,0,0.7)',
-                                                                        borderRadius: '50%',
-                                                                        width: 60,
-                                                                        height: 60,
-                                                                        display: 'flex',
-                                                                        alignItems: 'center',
-                                                                        justifyContent: 'center'
-                                                                    }}>
-                                                                        <PlayArrow sx={{ color: 'white', fontSize: 30 }} />
-                                                                    </Box>
-                                                                }
+                                                            <iframe
+                                                                src={normalizeVideoUrl(item.video)}
+                                                                title="Video player"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowFullScreen
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    top: 0,
+                                                                    left: 0,
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                    border: 'none'
+                                                                }}
                                                             />
                                                         </Box>
                                                         {item.caption && (

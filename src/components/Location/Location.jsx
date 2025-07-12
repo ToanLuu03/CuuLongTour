@@ -4,14 +4,13 @@ import {
   Card,
   CardContent,
   CardMedia,
-  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import { ChevronLeft, ChevronRight, LocationOn, AccessTime } from "@mui/icons-material";
+import { LocationOn, AccessTime } from "@mui/icons-material";
 import { get_5_Tours } from "../../services/Tour/Tour";
 import SeeMore_Button from "../SeeMore_Button/SeeMore_Button";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
@@ -30,21 +29,6 @@ function Location() {
     };
     fetchData();
   }, []);
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const { current } = scrollRef;
-      const scrollAmount = current.offsetWidth;
-      const scrollLeft = direction === 'left'
-        ? current.scrollLeft - scrollAmount
-        : current.scrollLeft + scrollAmount;
-
-      current.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>

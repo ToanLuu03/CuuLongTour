@@ -1,45 +1,51 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, CardContent, CircularProgress, Grid, Typography } from "@mui/material";
+import {
+    Box,
+    CardContent,
+    CircularProgress,
+    Grid,
+    Typography,
+    Stack,
+    Divider
+} from "@mui/material";
 import { getHotelById } from "../../services/Hotel/Hotel";
 import RatingComponent from "../../components/Rating/RatingComponent";
 import Comments from "../../components/Comment/Comment";
 import ImageCarousel from "../../components/Carousel/ImageCarousel";
 
 function HotelDetail() {
-    const { id } = useParams(); // Lấy id từ URL
-    const [hotelDetail, setHotelDetail] = useState(null); // State để lưu thông tin chi tiết
-    const [loading, setLoading] = useState(true); // State for loading indicator
-    const [error, setError] = useState(null); // State for error handling
+    const { id } = useParams();
+    const [hotelDetail, setHotelDetail] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch hotel details từ API
         const fetchHotelById = async () => {
             try {
                 const response = await getHotelById(id);
-                setHotelDetail(response.data); // Set dữ liệu vào state
+                setHotelDetail(response.data);
             } catch (error) {
                 console.error("Error fetching hotel detail:", error);
                 setError("Error: Unable to fetch Hotel data");
             } finally {
-                setLoading(false); // Stop loading once data is fetched
+                setLoading(false);
             }
         };
         fetchHotelById();
     }, [id]);
 
-
     if (loading) {
         return (
-            <div className="p-4">
+            <Box sx={{ p: 4, textAlign: "center" }}>
                 <CircularProgress />
-            </div>
+            </Box>
         );
     }
 
     if (error) {
         return (
-            <Box className="p-4">
+            <Box sx={{ p: 4 }}>
                 <Typography variant="h6" color="error">
                     {error}
                 </Typography>
@@ -48,57 +54,95 @@ function HotelDetail() {
     }
 
     return (
-        <div className="p-4">
-            <Typography variant="h4" component="h1" sx={{ color: '#1976d2' }} gutterBottom>
-                {hotelDetail.name} - {hotelDetail.address.city}, {hotelDetail.address.province}
+        <Box
+            sx={{
+                px: { xs: 2, sm: 4, md: 8 },
+                py: { xs: 3, md: 5 },
+                maxWidth: "1300px",
+                mx: "auto",
+            }}
+        >
+            <Typography
+                variant="h4"
+                sx={{
+                    fontWeight: 700,
+                    fontSize: { xs: 24, sm: 32, md: 38 },
+                    mb: 3,
+                    color: "#2A4D3E",
+                    textAlign: "center",
+                }}
+            >
+                {hotelDetail.name} – {hotelDetail.address.city}, {hotelDetail.address.province}
             </Typography>
 
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
-                    {/* Sử dụng ImageCarousel để hiển thị hình ảnh khách sạn */}
                     <ImageCarousel images={hotelDetail.images} altText={hotelDetail.name} />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <CardContent>
-                        <Typography variant="body1" paragraph>
-                            {hotelDetail.description}
-                        </Typography>
+                    <CardContent sx={{ px: { xs: 1, sm: 2 }, py: 1 }}>
+                        <Stack spacing={2}>
+                            <Typography sx={{ color: "#666", lineHeight: 1.7 }}>
+                                {hotelDetail.description}
+                            </Typography>
 
-                        <Typography variant="h6" sx={{ color: '#1976d2' }} gutterBottom>
-                            Utility:
-                        </Typography>
-                        <Typography variant="body1" paragraph>
-                            {hotelDetail.amenities.join(", ")}
-                        </Typography>
-                        <RatingComponent reviews={hotelDetail.reviews} />
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{ fontWeight: 600, fontSize: 18, color: "#1A3C34", mb: 1 }}
+                                >
+                                    Amenities:
+                                </Typography>
+                                <Typography sx={{ fontSize: 15, color: "#555" }}>
+                                    {hotelDetail.amenities.join(", ")}
+                                </Typography>
+                            </Box>
 
-                        <Typography variant="h6" sx={{ color: '#1976d2' }} gutterBottom>
-                            Contact:
-                        </Typography>
-                        <Typography variant="body2" paragraph>
-                            <strong>Phone:</strong> {hotelDetail.phoneNumber}
-                        </Typography>
-                        <Typography variant="body2" paragraph>
-                            <strong>Facebook:</strong>{" "}
-                            <a href={hotelDetail.facebookLink} target="_blank" rel="noopener noreferrer">
-                                {hotelDetail.facebookLink}
-                            </a>
-                        </Typography>
-                        <Typography variant="body2" paragraph>
-                            <strong>Instagram:</strong>{" "}
-                            <a href={hotelDetail.instagramLink} target="_blank" rel="noopener noreferrer">
-                                {hotelDetail.instagramLink}
-                            </a>
-                        </Typography>
+                            <RatingComponent reviews={hotelDetail.reviews} />
+
+                            <Divider sx={{ my: 2 }} />
+
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{ color: "#2A4D3E", mb: 1 }}
+                                >
+                                    Contact Information:
+                                </Typography>
+                                <Typography variant="body2">
+                                    <strong>Phone:</strong> {hotelDetail.phoneNumber}
+                                </Typography>
+                                <Typography variant="body2">
+                                    <strong>Facebook:</strong>{" "}
+                                    <a
+                                        href={hotelDetail.facebookLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {hotelDetail.facebookLink}
+                                    </a>
+                                </Typography>
+                                <Typography variant="body2">
+                                    <strong>Instagram:</strong>{" "}
+                                    <a
+                                        href={hotelDetail.instagramLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {hotelDetail.instagramLink}
+                                    </a>
+                                </Typography>
+                            </Box>
+                        </Stack>
                     </CardContent>
                 </Grid>
             </Grid>
 
-            <div className="mt-4">
+            <Box sx={{ mt: 5 }}>
                 <Comments comments={hotelDetail.reviews} />
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }
 
