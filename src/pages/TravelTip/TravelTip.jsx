@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { 
-  Card, 
-  CardContent, 
+import {
+  Card,
+  CardContent,
   CardMedia,
-  Typography, 
-  Grid, 
-  Box, 
+  Typography,
+  Grid,
+  Box,
   CircularProgress,
   Container,
   Chip,
@@ -17,7 +17,7 @@ import {
   MenuItem,
   InputLabel
 } from '@mui/material';
-import { Search, FilterList, LocationOn, Article, TipsAndUpdates, Person } from '@mui/icons-material';
+import { Search, Article, TipsAndUpdates, Person } from '@mui/icons-material';
 import { getAll_travelTip } from "../../services/TravelTip/TravelTip";
 import SeeMore_Button from '../../components/SeeMore_Button/SeeMore_Button';
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -59,21 +59,21 @@ function TravelTip() {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const [categories, setCategories] = useState([]);
-
   useEffect(() => {
     const fetchTravelGuides = async () => {
       try {
         const response = await getAll_travelTip();
         if (response.success && Array.isArray(response.data)) {
-          setTravelTips(response.data);
-          setFilteredData(response.data);
-          
-          // Extract unique categories (if available in data)
-          const uniqueCategories = [...new Set(response.data.map(tip => tip.category).filter(Boolean))];
+          const reversedData = [...response.data].reverse(); 
+          setTravelTips(reversedData);
+          setFilteredData(reversedData);
+
+          const uniqueCategories = [...new Set(reversedData.map(tip => tip.category).filter(Boolean))];
           setCategories(uniqueCategories);
         } else {
-          setTravelTips(response.data || []);
-          setFilteredData(response.data || []);
+          const reversedData = [...(response.data || [])].reverse();
+          setTravelTips(reversedData);
+          setFilteredData(reversedData);
         }
       } catch (error) {
         console.error('Error fetching travel guides:', error);
@@ -85,6 +85,7 @@ function TravelTip() {
 
     fetchTravelGuides();
   }, []);
+
 
   useEffect(() => {
     let filtered = travelTips;
@@ -135,12 +136,12 @@ function TravelTip() {
   if (loading) {
     return (
       <ThemeProvider theme={theme}>
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            minHeight: '50vh' 
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '50vh'
           }}
         >
           <CircularProgress size={60} sx={{ color: '#059669' }} />
@@ -185,7 +186,7 @@ function TravelTip() {
                 Travel Tips
               </Typography>
             </Box>
-           
+
             <Typography
               variant="body1"
               sx={{
@@ -198,13 +199,13 @@ function TravelTip() {
               Get the most out of your travels with our curated collection of travel tips
             </Typography>
             <Box sx={{ mt: 4, display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'center' }}>
-              <Chip 
-                label={`${filteredData.length} Tips Available`} 
-                sx={{ 
-                  bgcolor: 'rgba(255,255,255,0.2)', 
+              <Chip
+                label={`${filteredData.length} Tips Available`}
+                sx={{
+                  bgcolor: 'rgba(255,255,255,0.2)',
                   color: 'white',
-                  fontWeight: 600 
-                }} 
+                  fontWeight: 600
+                }}
               />
             </Box>
           </Container>
@@ -213,11 +214,11 @@ function TravelTip() {
         <Container maxWidth="lg" sx={{ pb: 6 }}>
           {/* Search and Filter Section */}
           <Box sx={{ mb: 4 }}>
-            <Stack 
-              direction={{ xs: 'column', md: 'row' }} 
-              spacing={2} 
+            <Stack
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
               alignItems="center"
-              sx={{ 
+              sx={{
                 bgcolor: 'white',
                 p: 3,
                 borderRadius: '12px',
@@ -248,7 +249,7 @@ function TravelTip() {
                   },
                 }}
               />
-              
+
               {categories.length > 0 && (
                 <FormControl sx={{ minWidth: 150 }}>
                   <InputLabel>Category</InputLabel>
@@ -317,7 +318,7 @@ function TravelTip() {
                         height="200"
                         image={tip.image?.[0] || '/api/placeholder/400/200'}
                         alt={tip.title}
-                        sx={{ 
+                        sx={{
                           objectFit: 'cover',
                           borderBottom: '1px solid rgba(0,0,0,0.05)',
                         }}

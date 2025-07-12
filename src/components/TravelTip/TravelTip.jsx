@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, CardMedia, Typography, IconButton, Stack } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography, Stack } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import SeeMore_Button from "../SeeMore_Button/SeeMore_Button";
 import { get_5_travel_tip } from "../../services/TravelTip/TravelTip";
 import { LocationOn } from "@mui/icons-material";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
@@ -18,25 +18,15 @@ function TravelTip() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await get_5_travel_tip();
-      setTravelTips(data);
+      if (Array.isArray(data)) {
+        setTravelTips([...data].reverse());
+      } else {
+        setTravelTips([]);
+      }
     };
     fetchData();
   }, []);
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const { current } = scrollRef;
-      const scrollAmount = current.offsetWidth;
-      const scrollLeft = direction === 'left'
-        ? current.scrollLeft - scrollAmount
-        : current.scrollLeft + scrollAmount;
-
-      current.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,7 +50,7 @@ function TravelTip() {
             letterSpacing: 0.5,
           }}
         >
-          Blogs
+          Travel Blog & Tips
         </Typography>
 
         <Box sx={{ position: 'relative' }}>
