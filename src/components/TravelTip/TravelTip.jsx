@@ -19,7 +19,7 @@ function TravelTip() {
     const fetchData = async () => {
       const data = await get_5_travel_tip();
       if (Array.isArray(data)) {
-        setTravelTips([...data].reverse());
+        setTravelTips(data);
       } else {
         setTravelTips([]);
       }
