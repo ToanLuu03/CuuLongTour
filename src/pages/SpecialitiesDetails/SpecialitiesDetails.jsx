@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSpecialtyById } from "../../services/Specialities/Specialities";
-import { Star, StarBorder, StarHalf } from "@mui/icons-material";
+import { Star, StarBorder } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Container,
@@ -100,12 +99,12 @@ function SpecialitiesDetails() {
           {/* Hero Section */}
 
           {/* Product Details Section */}
-          <Box sx={{ py: { xs: 0.5, sm: 1 }, backgroundColor: "#f9fafb", gap: 2, borderRadius:4 }}>
+          <Box sx={{ py: { xs: 0.5, sm: 1 }, backgroundColor: "#f9fafb", gap: 2, borderRadius: 4 }}>
             <Container maxWidth="lg" sx={{ px: { xs: 0, sm: 1 } }}>
               <Grid container spacing={2}>
                 {/* Product Images */}
                 <Grid item xs={12} md={6}>
-                  <Box sx={{ backgroundColor: "#fff", p: { xs: 1, sm: 2 }, boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)", borderRadius:4 }}>
+                  <Box sx={{ background: "rgba(237, 243, 227, 0.7)", p: { xs: 1, sm: 2 }, boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)", borderRadius: 4 }}>
                     <Box sx={{ position: "relative" }}>
                       <img
                         src={images[selectedImageIndex]}
@@ -145,7 +144,7 @@ function SpecialitiesDetails() {
                       {/* Ingredients */}
                       {Array.isArray(specialty.ingredients) && specialty.ingredients.length > 0 && (
                         <Grid item xs={12} md={6}>
-                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(111, 145, 61, 0.7)" }}>
+                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                             <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 } }}>
                               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                                 Ingredients
@@ -166,12 +165,12 @@ function SpecialitiesDetails() {
                       {/* Certification */}
                       {specialty.certification?.name && (
                         <Grid item xs={12} md={6}>
-                          <ProductCard sx={{ p: { xs: 1, sm: 2 } }}>
+                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                             <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 } }}>
                               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                                 Evaluate
                               </Typography>
-                              
+
                               <Box sx={{ display: "flex", alignItems: "center" }}>
                                 {/* Star Rating Logic */}
                                 <Box sx={{ display: "flex", mr: 2 }}>
@@ -197,7 +196,7 @@ function SpecialitiesDetails() {
                       {/* Packaging */}
                       {specialty.packaging && (
                         <Grid item xs={12} md={6}>
-                          <ProductCard sx={{ p: { xs: 1, sm: 2 } }}>
+                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                             <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 } }}>
                               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                                 Packaging
@@ -213,7 +212,7 @@ function SpecialitiesDetails() {
                       {/* Expiration */}
                       {specialty.expirationDate && !isNaN(Date.parse(specialty.expirationDate)) && (
                         <Grid item xs={12} md={6}>
-                          <ProductCard sx={{ p: { xs: 1, sm: 2}, background: "rgba(111, 145, 61, 0.7)" }}>
+                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                             <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 } }}>
                               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                                 Expiration Date
@@ -229,7 +228,7 @@ function SpecialitiesDetails() {
 
                       {specialty.description && (
                         <Grid item xs={12} md={12}>
-                          <ProductCard sx={{ p: { xs: 1, sm: 2 } }}>
+                          <ProductCard sx={{ p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                             <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 } }}>
                               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                                 Description
@@ -247,7 +246,7 @@ function SpecialitiesDetails() {
                 </Grid>
               </Grid>
               {/* QR Code and Contact Info */}
-              <ProductCard  ductCard sx={{ marginTop: 2, p: { xs: 1, sm: 2 }, background: "rgba(111, 145, 61, 0.7)" }}>
+              <ProductCard ductCard sx={{ marginTop: 2, p: { xs: 1, sm: 2 }, background: "rgba(237, 243, 227, 0.7)" }}>
                 <CardContent sx={{ px: { xs: 1, sm: 2 }, pb: 0, "&:last-child": { pb: 0, pt: 0 }, display: 'flex' }}>
                   <Box sx={{ flex: 1 }}>
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -281,7 +280,7 @@ function SpecialitiesDetails() {
                       </Box>
                     )}
                   </Box>
-                  <Box sx={{ width: 90, height: 90, mt: { xs: 2, sm: 0 }, ml: { sm: 2 }, display: 'flex', justifyContent:'center',alignItems:'center',paddingTop:5, paddingRight:10 }}>
+                  <Box sx={{ width: 90, height: 90, mt: { xs: 2, sm: 0 }, ml: { sm: 2 }, display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: 5, paddingRight: 10 }}>
                     <QRCodeComponent sx={{ paddingRight: 10 }} url={specialty.qrUrl} />
                   </Box>
                 </CardContent>

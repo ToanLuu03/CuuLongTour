@@ -25,7 +25,7 @@ const ChatBotCom = ({
     const [message, setMessage] = useState('');
     const initializedRef = useRef(false);
 
-    const introMessage = `Hello! I'm your Mekong Delta AI assistant. Ask me anything about:
+    const introMessage = `Hello! I'm Cuu Long AI Chat. Ask me anything about:
 - Travel information
 - Local culture
 - Food recommendations

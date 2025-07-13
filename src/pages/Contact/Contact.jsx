@@ -51,7 +51,7 @@ const Contact = () => {
           textAlign: "center",
         }}
       >
-        Contact Us
+        Contact to Cuu Long Vi Vu Travel
       </Typography>
 
       <Grid container spacing={4}>

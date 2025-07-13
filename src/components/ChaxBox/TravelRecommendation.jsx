@@ -108,7 +108,7 @@ const TravelRecommendation = ({
         }
     ];
 
-    const introMessage = `Welcome to Mekong Travel Assistant! 🌿
+    const introMessage = `Cuu Long Vi Vu Assistant 🌿
 
 I can help you plan your perfect trip to the Mekong Delta. Just answer a few short questions and I will recommend:
 - Interesting attractions

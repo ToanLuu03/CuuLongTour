@@ -17,6 +17,7 @@ import {
 } from '@mui/icons-material';
 import TravelRecommendation from './TravelRecommendation';
 import ChatBotCom from './ChatBotCom';
+import logo from "../../assets/imgs/Logo.jpeg";
 
 const ChatBox = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -96,10 +97,14 @@ const ChatBox = () => {
                                 mr: 1,
                                 fontWeight: 'bold'
                             }}>
-                                {activeTab === 0 ? <TravelExploreIcon /> : <SmartToyIcon />}
+                                {activeTab === 0 ? (
+                                    <img src={logo} alt="Logo" style={{ width: 40, height: 40 }} />
+                                ) : (
+                                    <img src={logo} alt="Logo" style={{ width: 40, height: 40 }} />
+                                )}
                             </Avatar>
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                                {activeTab === 0 ? 'Mekong Travel Assistant' : 'Mekong AI Chat'}
+                                {activeTab === 0 ? 'Cuu Long Vi Vu Assistant' : 'Cuu Long AI Chat'}
                             </Typography>
                         </Box>
                         <IconButton onClick={handleToggleChat} sx={{ color: 'white' }}>
